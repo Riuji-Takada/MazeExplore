@@ -286,3 +286,6 @@ class Character:
         scaled_image = pygame.transform.scale(animation[index],(constants.TILE_SIZE, constants.TILE_SIZE))
         # キャラクターの描画処理    
         screen.blit(scaled_image, self.__position)
+        
+        # デバッグ用
+        pygame.draw.rect(screen, (255,255,0), self.get_rect(), 1)

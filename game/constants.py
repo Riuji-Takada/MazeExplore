@@ -9,7 +9,7 @@ FRAME_RATE = 60
 GAME_ICON_PATH:str = 'game/assets/maze.png'
 
 # 
-GOAL_IMAGE_PATH:str = 'game/assets/select01.png'
+GOAL_IMAGE_PATH:str = 'game/assets/goal.png'
 
 # 壁の画像ファイルのパス
 WALL_IMAGE_PATH:str = 'game/assets/wall.png'
