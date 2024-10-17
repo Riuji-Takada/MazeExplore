@@ -38,7 +38,5 @@ if __name__ == '__main__':
         await self.move_forward()
         await self.move_forward()
         await self.move_forward()
-        
-        print("clear")
 
     game.main(move_character)

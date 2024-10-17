@@ -1,5 +1,7 @@
 import pygame
 
+# スプライトシートクラス
+# 画像からアニメーションの各フレームを取得できる
 class Spritesheet:
     def __init__(self, filename):
         self.filename = filename

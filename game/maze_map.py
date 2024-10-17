@@ -3,20 +3,25 @@ import pygame
 from game import constants
 from enum import Enum
 
+# マップの設定情報
 class MapInfo(Enum):
+    # 壁（キャラクターは移動不可能）
     WALL = 0
+    # 道（キャラクターは移動可能）
     ROAD = 1
 
 class Map:
     # コンストラクタ
     def __init__(self, map_data):
+        # TODO マップ情報の検証処理を追加
+        # 存在しない情報は入っている場合など
         self.map_data = map_data
         self.wall_list = []
 
         self.create_wall_list()
 
-        wall = pygame.image.load('game/assets/wall.png').convert()
-        road = pygame.image.load('game/assets/road.png').convert()
+        wall = pygame.image.load(constants.WALL_IMAGE_PATH).convert()
+        road = pygame.image.load(constants.ROAD_IMAGE_PATH).convert()
 
         self.map_dic = {
             MapInfo.WALL.value: wall,
@@ -49,8 +54,3 @@ class Map:
                 x = i * constants.TILE_SIZE
                 y = j * constants.TILE_SIZE
                 screen.blit(image, (x, y))
-                # TODO 本番で使うか要検討
-                # pygame.draw.rect(screen, (200,200,200), (x, y, constants.TILE_SIZE, constants.TILE_SIZE), 1)
-
-                # TODO 各マスの中心に円を描画
-                # pygame.draw.circle(screen, (255,0,0), (i * constants.TILE_SIZE + constants.TILE_SIZE / 2, j * constants.TILE_SIZE + constants.TILE_SIZE / 2), 3)

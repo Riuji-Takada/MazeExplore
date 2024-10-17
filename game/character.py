@@ -6,12 +6,14 @@ from game import constants
 from game.spritesheet import Spritesheet
 from enum import Enum
 
+# キャラクターの状態
 class CharacterState(Enum):
     # 静止状態
     IDLE = 1
     # 移動状態
     MOVING = 2
 
+# キャラクターが向いている方向
 class Direction(Enum):
     UP = 0
     RIGHT = 1
@@ -55,7 +57,7 @@ class Character:
         self.wall_list = wall_list
 
         # キャラクター画像のスプライトシートを生成
-        my_spritesheet = Spritesheet('game/assets/character.png')
+        my_spritesheet = Spritesheet(constants.CHARACTER_IMAGE_PATH)
 
         # 移動アニメーションの定義
         moving_up = [my_spritesheet.get_sprite(96, 48, 48, 48),
@@ -110,7 +112,6 @@ class Character:
         return pygame.Rect(self.__position.x, self.__position.y, constants.TILE_SIZE, constants.TILE_SIZE)
 
     async def move_forward(self):
-        print("move_forward")
         if not self.__can_move():
             return
         

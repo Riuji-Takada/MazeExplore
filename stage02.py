@@ -42,6 +42,5 @@ if __name__ == '__main__':
                 await self.turn_right()
             else:
                 await self.turn_left()
-        print("clear")
         
     game.main(move_character)
