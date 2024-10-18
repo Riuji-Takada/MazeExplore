@@ -30,6 +30,8 @@ class MazeGame:
         # リストが空の場合
         # 行または列が0
         # 二つの二次元配列のサイズが異なる場合
+        if not has_same_array_size(map_data, configuration_data):
+            return
         
         # pygameの初期化処理
         pygame.init()
@@ -143,7 +145,7 @@ class MazeGame:
         self.__screen.blit(text_surface, text_rect)
 
 # 引数で受け取った二次元配列が同じ行数・列数かを判定する
-def hasSameArraySize(first_2d_array: list[list[int]], second_2d_array: list[list[int]]) -> bool:   
+def has_same_array_size(first_2d_array: list[list[int]], second_2d_array: list[list[int]]) -> bool:   
     # 行数が一致しない場合の処理
     if len(first_2d_array) != len(second_2d_array):
         return False

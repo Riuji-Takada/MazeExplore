@@ -43,8 +43,8 @@ direction_pos = {
 
 class Character:
     def __init__(self, start_position:pygame.Vector2, wall_list):
-        self.COMMAND_INTERVAL = 0.1
-        self.__speed = 10
+        self.COMMAND_INTERVAL = 0.6
+        self.__speed = 5
         self.__frame_count = 0
         self.__animation_frame_rate = 20
         self.__position = start_position
@@ -53,33 +53,61 @@ class Character:
         self.__direction = Direction.UP
         self.__is_game_over = False
         self.__is_game_clear = False
-        
-        self.wall_list = wall_list
+        self.__wall_list = wall_list
 
+        self.create_animations()
+        
+    def create_animations(self):
         # キャラクター画像のスプライトシートを生成
         my_spritesheet = Spritesheet(constants.CHARACTER_IMAGE_PATH)
 
         # 移動アニメーションの定義
-        moving_up = [my_spritesheet.get_sprite(96, 48, 48, 48),
-                      my_spritesheet.get_sprite(144, 48, 48, 48)]
-        moving_right = [my_spritesheet.get_sprite(96, 144, 48, 48),
-                      my_spritesheet.get_sprite(144, 144, 48, 48)]
-        moving_down = [my_spritesheet.get_sprite(96, 0, 48, 48),
-                      my_spritesheet.get_sprite(144, 0, 48, 48)]
-        moving_left = [my_spritesheet.get_sprite(96, 96, 48, 48),
-                      my_spritesheet.get_sprite(144, 96, 48, 48)]
-        self.moving_animation = [moving_up, moving_right, moving_down, moving_left]
+        moving_up = [
+            my_spritesheet.get_sprite(96, 48, 48, 48),
+            my_spritesheet.get_sprite(144, 48, 48, 48)
+        ]
+        moving_right = [
+            my_spritesheet.get_sprite(96, 144, 48, 48),
+            my_spritesheet.get_sprite(144, 144, 48, 48)
+        ]
+        moving_down = [
+            my_spritesheet.get_sprite(96, 0, 48, 48),
+            my_spritesheet.get_sprite(144, 0, 48, 48)
+        ]
+        moving_left = [
+            my_spritesheet.get_sprite(96, 96, 48, 48),
+            my_spritesheet.get_sprite(144, 96, 48, 48)
+        ]
+        self.moving_animation = [
+            moving_up,
+            moving_right,
+            moving_down,
+            moving_left
+        ]
 
         # 静止アニメーションの定義
-        idle_up = [my_spritesheet.get_sprite(0, 48, 48, 48),
-                      my_spritesheet.get_sprite(48, 48, 48, 48)]
-        idle_right = [my_spritesheet.get_sprite(0, 144, 48, 48),
-                      my_spritesheet.get_sprite(48, 144, 48, 48)]
-        idle_down = [my_spritesheet.get_sprite(0, 0, 48, 48),
-                      my_spritesheet.get_sprite(48, 0, 48, 48)]
-        idle_left = [my_spritesheet.get_sprite(0, 96, 48, 48),
-                      my_spritesheet.get_sprite(48, 96, 48, 48)]
-        self.idle_animation = [idle_up, idle_right, idle_down, idle_left]
+        idle_up = [
+            my_spritesheet.get_sprite(0, 48, 48, 48),
+            my_spritesheet.get_sprite(48, 48, 48, 48)
+        ]
+        idle_right = [
+            my_spritesheet.get_sprite(0, 144, 48, 48),
+            my_spritesheet.get_sprite(48, 144, 48, 48)
+        ]
+        idle_down = [
+            my_spritesheet.get_sprite(0, 0, 48, 48),
+            my_spritesheet.get_sprite(48, 0, 48, 48)
+        ]
+        idle_left = [
+            my_spritesheet.get_sprite(0, 96, 48, 48),
+            my_spritesheet.get_sprite(48, 96, 48, 48)
+        ]
+        self.idle_animation = [
+            idle_up,
+            idle_right,
+            idle_down,
+            idle_left
+        ]
     
     def add_commands(self, commands):
         thread = threading.Thread(target=lambda: asyncio.run(commands(self)))
@@ -92,7 +120,7 @@ class Character:
         return self.get_rect().colliderect(target)
     
     def is_hitting_wall(self):
-        return self.get_rect().collidelist(self.wall_list) >= 1
+        return self.get_rect().collidelist(self.__wall_list) >= 1
     
     def set_game_over(self):
         self.__is_game_over = True
@@ -180,7 +208,7 @@ class Character:
         forward_position = self.__position + direction_pos[self.__direction]
         position_rect = pygame.Rect(forward_position.x, forward_position.y, constants.TILE_SIZE, constants.TILE_SIZE)
         
-        hasWall = position_rect.collidelist(self.wall_list) == -1
+        hasWall = position_rect.collidelist(self.__wall_list) == -1
         return hasWall
     
     async def can_move_right(self):
@@ -200,7 +228,7 @@ class Character:
         right_position = self.__position + direction_pos[right_direction]
         position_rect = pygame.Rect(right_position.x, right_position.y, constants.TILE_SIZE, constants.TILE_SIZE)
         
-        hasWall = position_rect.collidelist(self.wall_list) == -1
+        hasWall = position_rect.collidelist(self.__wall_list) == -1
         return hasWall
     
     async def can_move_left(self):
@@ -220,7 +248,7 @@ class Character:
         left_position = self.__position + direction_pos[left_direction]
         position_rect = pygame.Rect(left_position.x, left_position.y, constants.TILE_SIZE, constants.TILE_SIZE)
         
-        hasWall = position_rect.collidelist(self.wall_list) == -1
+        hasWall = position_rect.collidelist(self.__wall_list) == -1
         return hasWall
     
     def __can_move(self):
@@ -231,7 +259,6 @@ class Character:
     async def __wait_until_idle(self):
         # ゲームを終了する場合は何も処理しない
         while(self.__can_move() and self.__state != CharacterState.IDLE):
-            print("waiting")
             await asyncio.sleep(0.3)
 
     def __update_state(self):

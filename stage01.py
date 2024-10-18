@@ -34,9 +34,10 @@ if __name__ == '__main__':
 
     async def move_character(self:Character):
         # この下に命令を入力します
-        await self.move_forward()
-        await self.move_forward()
-        await self.move_forward()
-        await self.move_forward()
+        for i in range(4):
+            await self.move_forward()
+        # await self.move_forward()
+        # await self.move_forward()
+        # await self.move_forward()
 
     game.main(move_character)
