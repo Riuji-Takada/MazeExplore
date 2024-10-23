@@ -43,8 +43,8 @@ direction_pos = {
 
 class Character:
     def __init__(self, start_position:pygame.Vector2, wall_list):
-        self.COMMAND_INTERVAL = 0.6
-        self.__speed = 5
+        self.COMMAND_INTERVAL = constants.CHARACTER_MOVE_INTERVAL
+        self.__speed = constants.CHARACTER_SPEED
         self.__frame_count = 0
         self.__animation_frame_rate = 20
         self.__position = start_position
@@ -55,9 +55,9 @@ class Character:
         self.__is_game_clear = False
         self.__wall_list = wall_list
 
-        self.create_animations()
+        self.__create_animations()
         
-    def create_animations(self):
+    def __create_animations(self):
         # キャラクター画像のスプライトシートを生成
         my_spritesheet = Spritesheet(constants.CHARACTER_IMAGE_PATH)
 
@@ -117,10 +117,10 @@ class Character:
         return self.__state == CharacterState.IDLE
 
     def is_hitting(self, target:pygame.Rect):
-        return self.get_rect().colliderect(target)
+        return self.__get_rect().colliderect(target)
     
     def is_hitting_wall(self):
-        return self.get_rect().collidelist(self.__wall_list) >= 1
+        return self.__get_rect().collidelist(self.__wall_list) >= 1
     
     def set_game_over(self):
         self.__is_game_over = True
@@ -136,7 +136,7 @@ class Character:
         
         return self.__is_game_clear
 
-    def get_rect(self):
+    def __get_rect(self):
         return pygame.Rect(self.__position.x, self.__position.y, constants.TILE_SIZE, constants.TILE_SIZE)
 
     async def move_forward(self):
@@ -315,4 +315,4 @@ class Character:
         screen.blit(scaled_image, self.__position)
         
         # デバッグ用
-        pygame.draw.rect(screen, (255,255,0), self.get_rect(), 1)
+        pygame.draw.rect(screen, (255,255,0), self.__get_rect(), 1)
