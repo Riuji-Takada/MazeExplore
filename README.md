@@ -57,3 +57,4 @@ scoop install vscode
 ```
 git clone https://github.com/Riuji-Takada/MazeExplore.git
 ```
+![image](https://github.com/user-attachments/assets/77bf92d5-dcc8-4562-abff-708f321689ad)
