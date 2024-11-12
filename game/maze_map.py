@@ -3,12 +3,13 @@ import pygame
 from game import constants
 from enum import Enum
 
-# マップの設定情報
+
 class MapInfo(Enum):
     # 壁（キャラクターは移動不可能）
     WALL = 0
     # 道（キャラクターは移動可能）
     ROAD = 1
+
 
 class Map:
     # コンストラクタ
@@ -22,11 +23,11 @@ class Map:
         self.__COLUMN_COUNT = len(self.__map_data[0])
         # 壁のRectのリスト（当たり判定用）
         self.__wall_list = []
-        
+
         self.__create_map_dictionary()
 
         self.__create_wall_list()
-    
+
     # マップ情報の辞書を作成
     # キー：MapInfo（マップの設定情報）
     # 値　：Surface（タイル画像）
@@ -45,13 +46,14 @@ class Map:
     def __create_wall_list(self):
         for i in range(self.__COLUMN_COUNT):
             for j in range(self.__ROW_COUNT):
-                if(self.__map_data[j][i] != MapInfo.WALL.value):
+                if (self.__map_data[j][i] != MapInfo.WALL.value):
                     continue
-                
+
                 x = i * constants.TILE_SIZE
                 y = j * constants.TILE_SIZE
-                wall_rect = pygame.Rect(x, y, constants.TILE_SIZE, constants.TILE_SIZE)
-                
+                wall_rect = pygame.Rect(
+                    x, y, constants.TILE_SIZE, constants.TILE_SIZE)
+
                 self.__wall_list.append(wall_rect)
 
     # 壁のRectのリストを返す
@@ -64,8 +66,8 @@ class Map:
         for i in range(self.__COLUMN_COUNT):
             for j in range(self.__ROW_COUNT):
                 # マップの設定情報をもとに描画するタイル画像を取得
-                number = self.__map_data[j][i] 
-                image = self.map_dic[number] 
+                number = self.__map_data[j][i]
+                image = self.map_dic[number]
                 x = i * constants.TILE_SIZE
                 y = j * constants.TILE_SIZE
                 # タイル画像を描画
