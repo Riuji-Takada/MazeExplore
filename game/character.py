@@ -6,13 +6,11 @@ from game import constants
 from game.spritesheet import Spritesheet
 from enum import Enum
 
-
 class CharacterState(Enum):
     # 静止状態
     IDLE = 1
     # 移動状態
     MOVING = 2
-
 
 class Direction(Enum):
     UP = 0
@@ -35,14 +33,12 @@ class Direction(Enum):
         except ValueError:
             raise ValueError(f"指定された値 '{value}' に対応する列挙子がありません")
 
-
 direction_pos = {
     Direction.UP: pygame.Vector2(0, -constants.TILE_SIZE),
     Direction.DOWN: pygame.Vector2(0, constants.TILE_SIZE),
     Direction.LEFT: pygame.Vector2(-constants.TILE_SIZE, 0),
     Direction.RIGHT: pygame.Vector2(constants.TILE_SIZE, 0)
 }
-
 
 class Character:
     def __init__(self, start_position: pygame.Vector2, wall_list):

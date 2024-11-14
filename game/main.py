@@ -7,8 +7,6 @@ from game.maze_map import Map
 from game.character import Character
 
 # マップの配置情報の設定値
-
-
 class Configuration(Enum):
     # キャラクターの開始位置
     CHARACTER_START_POSITION = 1
@@ -16,8 +14,6 @@ class Configuration(Enum):
     GOAL = 2
 
 # ゲームの状態
-
-
 class GameState(Enum):
     # ゲームプレイ中
     GAMING = 0
@@ -27,7 +23,6 @@ class GameState(Enum):
     GAME_CLEAR = 2
     # ゲームを終了中
     CLOSING = 4
-
 
 class MazeGame:
     def __init__(self, map_data, configuration_data):
@@ -141,7 +136,6 @@ class MazeGame:
            and self.__character.is_idle_state()):
             self.__game_state = GameState.GAME_CLEAR
 
-    #
     def draw_text_centered(
             self, text_surface: pygame.Surface,
             draw_border: bool):
@@ -160,8 +154,6 @@ class MazeGame:
         self.__screen.blit(text_surface, text_rect)
 
 # 引数で受け取った二次元配列が同じ行数・列数かを判定する
-
-
 def has_same_array_size(
         first_2d_array: list[list[int]],
         second_2d_array: list[list[int]]) -> bool:
@@ -176,8 +168,6 @@ def has_same_array_size(
     return True
 
 # マップ設定情報から引数で指定した設定値検索して、ゲームマップの座標情報（x ,y)として返す
-
-
 def get_configuration_position(
         configuration_data: list[list[int]],
         config_type: Configuration) -> pygame.Vector2:

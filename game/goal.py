@@ -3,7 +3,6 @@ import pygame
 from game import constants
 from game.spritesheet import Spritesheet
 
-
 class Goal:
     def __init__(self, position: pygame.Vector2):
         self.__frame_count = 0

@@ -3,13 +3,11 @@ import pygame
 from game import constants
 from enum import Enum
 
-
 class MapInfo(Enum):
     # 壁（キャラクターは移動不可能）
     WALL = 0
     # 道（キャラクターは移動可能）
     ROAD = 1
-
 
 class Map:
     # コンストラクタ
